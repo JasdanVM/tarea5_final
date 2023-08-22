@@ -1,0 +1,5 @@
+
+enum Rutas {
+  inicio,
+  pantallaBienvenida,
+}
