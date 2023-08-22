@@ -1,9 +1,8 @@
 
 import 'package:flutter/material.dart';
-import '../models/user_login.dart';
-import '../providers/login_provider.dart';
+import '../models/album.dart';
+import '../services/enviar_datos.dart';
 import '../shared/constantes.dart';
-import 'package:get_it/get_it.dart';
 import '../widgets/input_form.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -16,8 +15,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final usuarioController = TextEditingController();
   final contraseniaController = TextEditingController();
+  Future<Album>? _futureAlbum;
   final formKey = GlobalKey<FormState>();
-  LoginProvider get service => GetIt.I<LoginProvider>();
+  // LoginProvider get service => GetIt.I<LoginProvider>();
 
   @override
   Widget build(BuildContext context) {
@@ -103,23 +103,51 @@ class _LoginScreenState extends State<LoginScreen> {
       );
   }
 
-  void _verifyLogin() async {
+  void _verifyLogin() async{
 
     if (formKey.currentState!.validate()) {
-      print('1');
-      final getToken = await LoginProvider().login(usuarioController.text,contraseniaController.text);
-      print('2');
-      if (getToken != null && getToken['token'] != null){
-        // ignore: use_build_context_synchronously
-        _showSnackBar('Iniciando sesión...');
-        Future.delayed(
-          const Duration(seconds: 2),
-          () => Navigator.pushNamed(context, Rutas.pantallaBienvenida.name)
-          );
-      }else{
+      // print('1');
+      // final getToken = await LoginProvider().login(usuarioController.text,contraseniaController.text);
+      // print('2');
+      
+      // if (getToken != null && getToken['token'] != null){
+      //   // ignore: use_build_context_synchronously
+      //   _showSnackBar('Iniciando sesión...');
+      //   Future.delayed(
+      //     const Duration(seconds: 2),
+      //     () => Navigator.pushNamed(context, Rutas.pantallaBienvenida.name)
+      //     );
+      setState(() {
+          _futureAlbum = crearAlbum(usuario: usuarioController.text,contrasenia: contraseniaController.text);
+        });
+
+      try{
+        await _futureAlbum;  
+        FutureBuilder<Album>(
+        future: _futureAlbum,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Text(snapshot.data!.token);
+          } else if (snapshot.hasError) {
+            return Text('${snapshot.error}');
+          }
+
+          return const CircularProgressIndicator();
+        },
+        );
+      //   if (_futureAlbum != null){
+      //     _showSnackBar('Iniciando sesión...');
+      //     await Future.delayed(
+      //       const Duration(seconds: 2),
+      //       () => Navigator.pushNamed(context, Rutas.pantallaBienvenida.name)
+      //       );
+      //   }else{
+
+          
+      //   }
+      }catch(e){
         _showSnackBar('Credenciales inválidas. Por favor, inténtelo otra vez.');
         contraseniaController.clear();
-        
       }
     } else {
       _showSnackBar('Acceso inválido. Por favor, inténtelo otra vez.');
