@@ -111,19 +111,19 @@ class _LoginScreenState extends State<LoginScreen> {
       print('2');
       if (getToken != null && getToken['token'] != null){
         // ignore: use_build_context_synchronously
-        _showSnackBar('Credenciales inválidas. Por favor, inténtelo otra vez.');
-        
-      }else{
         _showSnackBar('Iniciando sesión...');
         Future.delayed(
           const Duration(seconds: 2),
           () => Navigator.pushNamed(context, Rutas.pantallaBienvenida.name)
           );
-        //TODO test contraseniaController.clear();
+      }else{
+        _showSnackBar('Credenciales inválidas. Por favor, inténtelo otra vez.');
+        contraseniaController.clear();
+        
       }
     } else {
       _showSnackBar('Acceso inválido. Por favor, inténtelo otra vez.');
-      //TODO test contraseniaController.clear();
+      contraseniaController.clear();
     }
   }
 
