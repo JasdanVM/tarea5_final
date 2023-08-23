@@ -1,10 +1,10 @@
-class Album {
+class RespuestaLogin {
   final String token;
 
-  const Album({required this.token});
+  const RespuestaLogin({required this.token});
 
-  factory Album.fromJson(Map<String, dynamic> json) {
-    return Album(
+  factory RespuestaLogin.fromJson(Map<String, dynamic> json) {
+    return RespuestaLogin(
       token: json['token'],
     );
   }

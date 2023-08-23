@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../models/movie.dart';
+import '../shared/constantes.dart';
 import 'pelicula_screen.dart';
 
 class ListaPeliculasScreen extends StatefulWidget {
@@ -59,9 +60,15 @@ class _ListaPeliculasScreenState extends State<ListaPeliculasScreen> {
                 : const Icon(Icons.movie),
             title: Text(pelicula.titulo),
             onTap: () {
+              Navigator.pushNamed(
+                context,
+                Rutas.pantallaListaPeliculas.name,
+                arguments: pelicula
+              );
               Navigator.push(
                 context,
                 MaterialPageRoute(
+
                   builder: (context) => PeliculaScreen(movie: pelicula),
                 ),
               );

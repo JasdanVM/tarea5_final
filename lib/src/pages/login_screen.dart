@@ -14,7 +14,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final usuarioController = TextEditingController();
   final contraseniaController = TextEditingController();
-  Future<Album>? _futureAlbum;
+  Future<RespuestaLogin>? _futureAlbum;
   final formKey = GlobalKey<FormState>();
   // LoginProvider get service => GetIt.I<LoginProvider>();
 
@@ -105,45 +105,18 @@ class _LoginScreenState extends State<LoginScreen> {
   void _verifyLogin() async{
 
     if (formKey.currentState!.validate()) {
-      // print('1');
-      // final getToken = await LoginProvider().login(usuarioController.text,contraseniaController.text);
-      // print('2');
-      
-      // if (getToken != null && getToken['token'] != null){
-      //   // ignore: use_build_context_synchronously
-      //   _showSnackBar('Iniciando sesión...');
-      //   Future.delayed(
-      //     const Duration(seconds: 2),
-      //     () => Navigator.pushNamed(context, Rutas.pantallaListaPeliculas.name)
-      //     );
       setState(() {
-          _futureAlbum = crearAlbum(usuario: usuarioController.text,contrasenia: contraseniaController.text);
+          _futureAlbum = iniciarSesion(usuario: usuarioController.text,contrasenia: contraseniaController.text);
         });
 
       try{
         await _futureAlbum;  
-        FutureBuilder<Album>(
-        future: _futureAlbum,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Text(snapshot.data!.token);
-          } else if (snapshot.hasError) {
-            return Text('${snapshot.error}');
-          }
-
-          return const CircularProgressIndicator();
-        },
-        );
-      //   if (_futureAlbum != null){
-      //     _showSnackBar('Iniciando sesión...');
-      //     await Future.delayed(
-      //       const Duration(seconds: 2),
-      //       () => Navigator.pushNamed(context, Rutas.pantallaListaPeliculas.name)
-      //       );
-      //   }else{
-
-          
-      //   }
+        _showSnackBar('Iniciando sesión...');
+        await Future.delayed(
+          const Duration(seconds: 2),
+          () => Navigator.pushNamed(context, 'Inexistente')
+          );
+        
       }catch(e){
         _showSnackBar('Credenciales inválidas. Por favor, inténtelo otra vez.');
         contraseniaController.clear();
