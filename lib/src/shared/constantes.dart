@@ -1,5 +1,6 @@
 
 enum Rutas {
-  inicio,
-  pantallaBienvenida,
+  inicioSesion,
+  pantallaListaPeliculas,
+  pantallaPelicula,
 }

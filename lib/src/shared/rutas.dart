@@ -1,9 +1,11 @@
 
-import '../pages/bienvenida_screen.dart';
 import '../pages/login_screen.dart';
+import '../pages/lista_peliculas_screen.dart';
+import '../pages/pelicula_screen.dart';
 import 'constantes.dart';
 
 final rutas = {
-  Rutas.inicio.name: (context) => const LoginScreen(),
-  Rutas.pantallaBienvenida.name: (context) => const BienvenidaScreen(),
+  Rutas.inicioSesion.name: (context) => const LoginScreen(),
+  Rutas.pantallaListaPeliculas.name: (context) => const ListaPeliculasScreen(),
+  Rutas.pantallaPelicula.name: (context) => const PeliculaScreen(movie: movie),
 };

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../models/album.dart';
 import '../services/enviar_datos.dart';
@@ -115,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
       //   _showSnackBar('Iniciando sesión...');
       //   Future.delayed(
       //     const Duration(seconds: 2),
-      //     () => Navigator.pushNamed(context, Rutas.pantallaBienvenida.name)
+      //     () => Navigator.pushNamed(context, Rutas.pantallaListaPeliculas.name)
       //     );
       setState(() {
           _futureAlbum = crearAlbum(usuario: usuarioController.text,contrasenia: contraseniaController.text);
@@ -139,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
       //     _showSnackBar('Iniciando sesión...');
       //     await Future.delayed(
       //       const Duration(seconds: 2),
-      //       () => Navigator.pushNamed(context, Rutas.pantallaBienvenida.name)
+      //       () => Navigator.pushNamed(context, Rutas.pantallaListaPeliculas.name)
       //       );
       //   }else{
 
