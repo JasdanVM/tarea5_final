@@ -23,7 +23,7 @@ class _PeliculaScreenState extends State<PeliculaScreen> {
   }
 
   Future<void> _fetchMovieCast() async {
-    const apiKey = 'd6430e4ce739c97e3c67ddb93fb98e25'; // The provided API key
+    const apiKey = 'd6430e4ce739c97e3c67ddb93fb98e25';
     final response = await http.get(
       Uri.parse(
           'https://api.themoviedb.org/3/movie/${widget.movie.id}/credits?api_key=$apiKey'),
@@ -35,9 +35,9 @@ class _PeliculaScreenState extends State<PeliculaScreen> {
         cast = (data['cast'] as List)
             .map((castData) => Cast(
                   id: castData['id'],
-                  nombre: castData['nombre'],
-                  personaje: castData['personaje'],
-                  perfil: castData['perfil'],
+                  nombre: castData['name'] ?? '',
+                  personaje: castData['character'] ?? '',
+                  perfil: castData['profile_path'] ?? '',
                 ))
             .toList();
       });
@@ -52,12 +52,23 @@ class _PeliculaScreenState extends State<PeliculaScreen> {
       appBar: AppBar(title: Text(widget.movie.titulo)),
       body: Column(
         children: [
-          if (widget.movie.poster.isNotEmpty)
-            Image.network(
-                'https://image.tmdb.org/t/p/w185${widget.movie.poster}'),
+          GestureDetector(
+            onTap: () {
+              _showPosterDialog();
+            },
+            child: Image.network(
+              'https://image.tmdb.org/t/p/w185${widget.movie.poster}',
+            ),
+          ),
+          const Text('Descripcion:'),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(widget.movie.sinopsis),
+          ),
+          const Text('Fecha de lanzamiento:'),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(widget.movie.fecha),
           ),
           const Text('Actores:'),
           Expanded(
@@ -78,6 +89,20 @@ class _PeliculaScreenState extends State<PeliculaScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  void _showPosterDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Image.network(
+            'https://image.tmdb.org/t/p/w500${widget.movie.poster}',
+            fit: BoxFit.contain,
+          ),
+        );
+      },
     );
   }
 }
