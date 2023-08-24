@@ -33,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Center(
         child: Obx(
           () {
-            if (loginController.loginOutput.isNotEmpty) {
+            if (loginController.loginOutput.isNotEmpty && box.read('token') != null) {
               _iniciando();
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,

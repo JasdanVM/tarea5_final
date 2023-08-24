@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../models/movie.dart';
@@ -14,6 +16,7 @@ class ListaPeliculasScreen extends StatefulWidget {
 
 class _ListaPeliculasScreenState extends State<ListaPeliculasScreen> {
   List<Movie> peliculas = [];
+  final box = GetStorage();
 
   @override
   void initState() {
@@ -51,19 +54,18 @@ class _ListaPeliculasScreenState extends State<ListaPeliculasScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Menú de Películas'),
-        automaticallyImplyLeading: false,
+        // automaticallyImplyLeading: false,
       ),
       drawer: Drawer(
         child: ListView(
           children: [
             ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text('Inicio'),
+              leading: const Icon(Icons.exit_to_app),
+              title: const Text('Cerrar Sesión'),
               onTap: () {
-                //1. Cerrar el drawer
                 Navigator.pop(context);
-                //
-                Navigator.of(context).pushNamed('/perfil');
+                box.remove('token');
+                Navigator.of(context).pushNamed(Rutas.inicioSesion.name);
               },
             ),
             ListTile(
