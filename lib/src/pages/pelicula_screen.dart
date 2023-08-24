@@ -23,7 +23,7 @@ class _PeliculaScreenState extends State<PeliculaScreen> {
   }
 
   Future<void> _fetchMovieCast() async {
-    const apiKey = 'd6430e4ce739c97e3c67ddb93fb98e25'; // Your provided API key
+    const apiKey = 'd6430e4ce739c97e3c67ddb93fb98e25'; // The provided API key
     final response = await http.get(
       Uri.parse(
           'https://api.themoviedb.org/3/movie/${widget.movie.id}/credits?api_key=$apiKey'),
