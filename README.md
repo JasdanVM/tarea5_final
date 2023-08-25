@@ -13,5 +13,5 @@ Caracteríasticas a resaltar
 + Botón Flotante para regresar al principio de la lista.
 + Menú lateral en la pantalla de la lista para acceder a pantalla de Configuración, y Cerrar Sesión
 + Cambiar el idioma de la Lista de Películas (Español/English) en Configuración
-+ Nombre de Usuario e Idioma se guardan en las preferencias del ususario
++ Nombre de Usuario e Idioma se guardan en las preferencias
 + Maximizar el póster de la película en la pantalla de detalles
