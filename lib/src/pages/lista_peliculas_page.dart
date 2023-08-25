@@ -174,7 +174,10 @@ class _ListaPeliculasScreenState extends State<ListaPeliculasScreen> {
                           const SizedBox(
                             width: 40,
                           ),
-                          Text(pelicula.titulo)
+                          Expanded(
+                            child: 
+                              Text(pelicula.titulo,softWrap: true,maxLines: 2,overflow: TextOverflow.ellipsis),
+                          )
                         ],
                       ),
                     ),
