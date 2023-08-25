@@ -6,6 +6,7 @@ import '../models/cast.dart';
 import '../services/recibir_peliculas.dart';
 
 
+  late Movie movie;
 
 class PeliculaPage extends StatefulWidget {
   const PeliculaPage({super.key});
@@ -15,7 +16,6 @@ class PeliculaPage extends StatefulWidget {
 }
 
 class _PeliculaPageState extends State<PeliculaPage> {
-  late Movie movie;
   final languageController = Get.put(LanguageController());
   List<Cast> castList = [];
 
