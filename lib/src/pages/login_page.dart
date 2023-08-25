@@ -26,8 +26,12 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pantalla de Login'),
+        backgroundColor: Color.fromARGB(255, 10, 38, 64),
+        title: const Text('Login',
+          style: TextStyle(color: Colors.white, fontSize: 18), 
+        ),
         centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       resizeToAvoidBottomInset: true,
       body: Center(
@@ -38,18 +42,30 @@ class _LoginScreenState extends State<LoginScreen> {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Bienvenido(a)'),
-                  SizedBox(height: 20),
-                  CircularProgressIndicator(),
+                  const Spacer(),
+                  const SizedBox(
+                    width: double.infinity,
+                    height: 200,
+                    child: Image(
+                      image: AssetImage('assets/tmdb_logo_2.png'),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                    ),
+                  Text('Bienvenido(a) ${loginController.userName}'),
+                  const SizedBox(height: 20),
+                  const CircularProgressIndicator(color: Color.fromARGB(255, 73, 209, 79),),
+                  const Spacer(),
                 ],
               );
             } else {
               return Padding(
                 padding: EdgeInsets.only(
-                    top: 15,
-                    bottom: MediaQuery.of(context).viewInsets.bottom,
-                    left: 15,
-                    right: 15),
+                  top: 15,
+                  bottom: MediaQuery.of(context).viewInsets.bottom,
+                  left: 15,
+                  right: 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -105,17 +121,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.yellow),
+                            MaterialStateProperty.all<Color>(Color.fromARGB(255, 25, 184, 217)),
                         shape: MaterialStateProperty.all<OutlinedBorder>(
                           RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
+                            borderRadius: BorderRadius.circular(24.0),
                           ),
                         ),
                       ),
                       onPressed: _verifyLogin,
                       child: const Text(
                         'Iniciar sesión',
-                        style: TextStyle(color: Color.fromARGB(255, 7, 48, 82)),
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                     const Spacer(),
@@ -139,6 +155,9 @@ class _LoginScreenState extends State<LoginScreen> {
         _showSnackBar('Iniciando sesión...');
         await box.write('token', response!.token);
         loginController.loginOutput = response.token;
+        await box.write('user', usuarioController.text);
+        loginController.userName = usuarioController.text;
+
         _iniciando();
       } catch (e) {
         _showSnackBar('Credenciales inválidas. Por favor, inténtelo otra vez.');
@@ -165,4 +184,5 @@ class _LoginScreenState extends State<LoginScreen> {
     await Future.delayed(const Duration(seconds: 4),
       () => Navigator.pushNamed(context, Rutas.pantallaListaPeliculas.name));
   }
+
 }

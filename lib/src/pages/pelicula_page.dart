@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../controllers/language_controller.dart';
 import '../models/movie.dart';
 import '../models/cast.dart';
+import '../services/recibir_peliculas.dart';
 
 class PeliculaScreen extends StatefulWidget {
   final Movie movie;
@@ -14,6 +17,7 @@ class PeliculaScreen extends StatefulWidget {
 }
 
 class _PeliculaScreenState extends State<PeliculaScreen> {
+  final languageController = Get.put(LanguageController());
   List<Cast> cast = [];
 
   @override
@@ -21,6 +25,17 @@ class _PeliculaScreenState extends State<PeliculaScreen> {
     super.initState();
     _fetchMovieCast();
   }
+
+  // Future<void> _cargarPelicula() async {
+  //   try {
+  //     final movie = await Tmdb().fetchMovieCast();
+  //     setState(() {
+  //       pelicula = movie;
+  //     });
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   Future<void> _fetchMovieCast() async {
     const apiKey = 'd6430e4ce739c97e3c67ddb93fb98e25';
@@ -56,21 +71,27 @@ class _PeliculaScreenState extends State<PeliculaScreen> {
             onTap: () {
               _showPosterDialog();
             },
-            child: Image.network(
-              'https://image.tmdb.org/t/p/w185${widget.movie.poster}',
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Image.network(
+                'https://image.tmdb.org/t/p/w185${widget.movie.poster}',
+              ),
             ),
           ),
-          const Text('Descripcion:'),
+          Builder(builder: (context) => (languageController.langCode=='') ? const Text('Description:') : const Text('Descripción:')    
+          ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(widget.movie.sinopsis),
           ),
-          const Text('Fecha de lanzamiento:'),
+          Builder(builder: (context) => (languageController.langCode=='') ? const Text('Release date:') : const Text('Fecha de lanzamiento:')    
+          ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(widget.movie.fecha),
           ),
-          const Text('Actores:'),
+          Builder(builder: (context) => (languageController.langCode=='') ? const Text('Cast:') : const Text('Actores/Actrices:')    
+          ),
           Expanded(
             child: ListView.builder(
               itemCount: cast.length,
@@ -78,8 +99,11 @@ class _PeliculaScreenState extends State<PeliculaScreen> {
                 final castItem = cast[index];
                 return ListTile(
                   leading: castItem.perfil.isNotEmpty
-                      ? Image.network(
-                          'https://image.tmdb.org/t/p/w92${castItem.perfil}')
+                      ? ClipRRect(
+                        borderRadius: BorderRadius.circular(5.0),
+                        child: Image.network(
+                            'https://image.tmdb.org/t/p/w92${castItem.perfil}'),
+                      )
                       : const Icon(Icons.person),
                   title: Text(castItem.nombre),
                   subtitle: Text(castItem.personaje),

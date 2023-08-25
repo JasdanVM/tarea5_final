@@ -31,14 +31,14 @@ class _InputFormState extends State<InputForm> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
-      style: const TextStyle(color: Color.fromARGB(255, 8, 75, 129)),
+      style: const TextStyle(color: Color.fromARGB(255, 7, 31, 52)),
       keyboardType: widget.type,
       obscureText: widget.obscureText,
       decoration: InputDecoration(
         label: Text(widget.label),
         prefixIcon: Icon(
           widget.icon,
-          color: const Color.fromARGB(255, 202, 184, 21),
+          color: const Color.fromARGB(255, 138, 205, 135),
         ),
         suffixIcon: widget.mostrarBoton
             ? IconButton(
