@@ -47,32 +47,12 @@ class _ListaPeliculasScreenState extends State<ListaPeliculasScreen> {
     });
 
     try {
-      const apiKey = 'd6430e4ce739c97e3c67ddb93fb98e25';
-      final response = await http.get(
-        Uri.parse(
-            'https://api.themoviedb.org/3/movie/popular?api_key=$apiKey&language=es-ES&page=$currentPage'),
-      );
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> data = json.decode(response.body);
-        final movies = (data['results'] as List)
-            .map((datosPelicula) => Movie(
-                  id: datosPelicula['id'],
-                  titulo: datosPelicula['title'] ?? '',
-                  sinopsis: datosPelicula['overview'] ?? '',
-                  poster: datosPelicula['poster_path'] ?? '',
-                  fecha: datosPelicula['release_date'] ?? '',
-                ))
-            .toList();
-
-        setState(() {
-          peliculas.addAll(movies);
-          currentPage++;
-          isLoading = false;
-        });
-      } else {
-        throw Exception('Error al cargar las peliculas');
-      }
+      final movies = await Tmdb().fetchPopularMovies(currentPage);
+      setState(() {
+        peliculas.addAll(movies);
+        currentPage++;
+        isLoading = false;
+      });
     } catch (e) {
       print(e);
       isLoading = false;
@@ -149,15 +129,12 @@ class _ListaPeliculasScreenState extends State<ListaPeliculasScreen> {
                 children: [
                   GestureDetector(
                     onTap: () {
+                      // Navigator.pushNamed(
+                      //     context, Rutas.pantallaListaPeliculas.name,
+                      //     arguments: pelicula);
                       Navigator.pushNamed(
-                          context, Rutas.pantallaListaPeliculas.name,
+                          context, Rutas.pantallaPelicula.name,
                           arguments: pelicula);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PeliculaScreen(movie: pelicula),
-                        ),
-                      );
                     },
                     child: Container(
                       margin: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -194,7 +171,7 @@ class _ListaPeliculasScreenState extends State<ListaPeliculasScreen> {
               );
             } else if (isLoading) {
               return const Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(color: Color.fromARGB(255, 73, 209, 79),),
               );
             } else {
               return const SizedBox();

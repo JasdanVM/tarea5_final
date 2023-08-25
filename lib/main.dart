@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(useMaterial3: true),
       title: 'Tarea 3 por JV & AG',
+      color: Color.fromARGB(255, 73, 209, 79),
       initialRoute: Rutas.inicioSesion.name,
       routes: rutas,
       onGenerateRoute: (settings) {

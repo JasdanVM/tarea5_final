@@ -1,70 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import '../controllers/language_controller.dart';
 import '../models/movie.dart';
 import '../models/cast.dart';
 import '../services/recibir_peliculas.dart';
 
-class PeliculaScreen extends StatefulWidget {
-  final Movie movie;
+late Movie movie;
 
-  const PeliculaScreen({Key? key, required this.movie}) : super(key: key);
+class PeliculaPage extends StatefulWidget {
+  
+
+  const PeliculaPage({super.key});
 
   @override
-  _PeliculaScreenState createState() => _PeliculaScreenState();
+  _PeliculaPageState createState() => _PeliculaPageState();
 }
 
-class _PeliculaScreenState extends State<PeliculaScreen> {
+class _PeliculaPageState extends State<PeliculaPage> {
   final languageController = Get.put(LanguageController());
   List<Cast> cast = [];
 
   @override
   void initState() {
     super.initState();
-    _fetchMovieCast();
+    _cargarPelicula();
   }
 
-  // Future<void> _cargarPelicula() async {
-  //   try {
-  //     final movie = await Tmdb().fetchMovieCast();
-  //     setState(() {
-  //       pelicula = movie;
-  //     });
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
-
-  Future<void> _fetchMovieCast() async {
-    const apiKey = 'd6430e4ce739c97e3c67ddb93fb98e25';
-    final response = await http.get(
-      Uri.parse(
-          'https://api.themoviedb.org/3/movie/${widget.movie.id}/credits?api_key=$apiKey'),
-    );
-
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> data = json.decode(response.body);
+  Future<void> _cargarPelicula() async {
+    try {
+      final movieCast = await Tmdb().fetchMovieCast(movie);
       setState(() {
-        cast = (data['cast'] as List)
-            .map((castData) => Cast(
-                  id: castData['id'],
-                  nombre: castData['name'] ?? '',
-                  personaje: castData['character'] ?? '',
-                  perfil: castData['profile_path'] ?? '',
-                ))
-            .toList();
+        cast = movieCast;
       });
-    } else {
-      throw Exception('Error al cargar el cast');
+    } catch (e) {
+      print(e);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+  movie = ModalRoute.of(context)!.settings.arguments as Movie;
     return Scaffold(
-      appBar: AppBar(title: Text(widget.movie.titulo)),
+      appBar: AppBar(title: Text(movie.titulo)),
       body: Column(
         children: [
           GestureDetector(
@@ -74,19 +51,19 @@ class _PeliculaScreenState extends State<PeliculaScreen> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Image.network(
-                'https://image.tmdb.org/t/p/w185${widget.movie.poster}',
+                'https://image.tmdb.org/t/p/w185${movie.poster}',
               ),
             ),
           ),
           (languageController.langCode=='') ? const Text('Description:') : const Text('Descripción:'),
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Text(widget.movie.sinopsis),
+            child: Text(movie.sinopsis),
           ),
           (languageController.langCode=='') ? const Text('Release date:') : const Text('Fecha de lanzamiento:'),
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Text(widget.movie.fecha),
+            child: Text(movie.fecha),
           ),
           (languageController.langCode=='') ? const Text('Cast:') : const Text('Actores/Actrices:'),
           Expanded(
@@ -119,7 +96,7 @@ class _PeliculaScreenState extends State<PeliculaScreen> {
       builder: (BuildContext context) {
         return Dialog(
           child: Image.network(
-            'https://image.tmdb.org/t/p/w500${widget.movie.poster}',
+            'https://image.tmdb.org/t/p/w500${movie.poster}',
             fit: BoxFit.contain,
           ),
         );
