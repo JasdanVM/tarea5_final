@@ -10,4 +10,13 @@ class Cast {
     required this.personaje,
     required this.perfil,
   });
+
+  factory Cast.fromJson(Map<String, dynamic> json) {
+    return Cast(
+      id: json['id']?? '',
+      nombre: json['name'] ?? '',
+      personaje: json['character'] ?? '',
+      perfil: json['profile_path'] ?? '',
+    );
+  }
 }

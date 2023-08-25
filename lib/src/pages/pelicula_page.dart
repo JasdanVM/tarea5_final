@@ -8,8 +8,6 @@ import '../services/recibir_peliculas.dart';
 late Movie movie;
 
 class PeliculaPage extends StatefulWidget {
-  
-
   const PeliculaPage({super.key});
 
   @override
@@ -39,7 +37,7 @@ class _PeliculaPageState extends State<PeliculaPage> {
 
   @override
   Widget build(BuildContext context) {
-  movie = ModalRoute.of(context)!.settings.arguments as Movie;
+    movie = ModalRoute.of(context)!.settings.arguments as Movie;
     return Scaffold(
       appBar: AppBar(title: Text(movie.titulo)),
       body: Column(
