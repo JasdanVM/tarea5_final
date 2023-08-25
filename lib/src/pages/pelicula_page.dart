@@ -5,7 +5,7 @@ import '../models/movie.dart';
 import '../models/cast.dart';
 import '../services/recibir_peliculas.dart';
 
-late Movie movie;
+
 
 class PeliculaPage extends StatefulWidget {
   const PeliculaPage({super.key});
@@ -15,8 +15,9 @@ class PeliculaPage extends StatefulWidget {
 }
 
 class _PeliculaPageState extends State<PeliculaPage> {
+  late Movie movie;
   final languageController = Get.put(LanguageController());
-  List<Cast> cast = [];
+  List<Cast> castList = [];
 
   @override
   void initState() {
@@ -28,7 +29,7 @@ class _PeliculaPageState extends State<PeliculaPage> {
     try {
       final movieCast = await Tmdb().fetchMovieCast(movie);
       setState(() {
-        cast = movieCast;
+        castList = movieCast;
       });
     } catch (e) {
       print(e);
@@ -66,9 +67,9 @@ class _PeliculaPageState extends State<PeliculaPage> {
           (languageController.langCode=='') ? const Text('Cast:') : const Text('Actores/Actrices:'),
           Expanded(
             child: ListView.builder(
-              itemCount: cast.length,
+              itemCount: castList.length,
               itemBuilder: (context, index) {
-                final castItem = cast[index];
+                final castItem = castList[index];
                 return ListTile(
                   leading: castItem.perfil.isNotEmpty
                       ? ClipRRect(
