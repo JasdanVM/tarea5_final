@@ -1,8 +1,7 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:tarea5_final/src/controllers/language_controller.dart';
 import 'dart:convert';
-
+import '../controllers/language_controller.dart';
 import '../models/cast.dart';
 import '../models/movie.dart';
 
@@ -13,7 +12,7 @@ class Tmdb {
   Future<List<Movie>> fetchPopularMovies(currentPage) async {
   final response = await http.get(
     Uri.parse(
-      'https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}${languageController.langCode}&page=$currentPage'
+      'https://api.themoviedb.org/3/movie/popular?api_key=$apiKey${languageController.langCode}&page=$currentPage'
     ),
   );
 

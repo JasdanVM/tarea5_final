@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:tarea5_final/src/models/colors.dart';
 import '../controllers/login_controller.dart';
 import '../models/respuesta.dart';
 import '../services/enviar_datos.dart';
@@ -26,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 10, 38, 64),
+        backgroundColor: CustomColor.cIndigo,
         title: const Text('Login',
           style: TextStyle(color: Colors.white, fontSize: 18), 
         ),
@@ -55,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   Text('Bienvenido(a) ${loginController.userName}'),
                   const SizedBox(height: 20),
-                  const CircularProgressIndicator(color: Color.fromARGB(255, 73, 209, 79),),
+                  const CircularProgressIndicator(color: CustomColor.cVerde,),
                   const Spacer(),
                 ],
               );
@@ -89,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             icon: Icons.person,
                             controller: usuarioController,
                             validator: (value) {
-                              if (value!.length < 1) {
+                              if (value!.isEmpty) {
                                 return 'Ingrese un usuario válido';
                               }
                               return null;
@@ -105,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             mostrarBoton: true,
                             controller: contraseniaController,
                             validator: (value) {
-                              if (value!.length < 1) {
+                              if (value!.isEmpty) {
                                 contraseniaController.clear();
                                 return 'Debe ingresar su contraseña';
                               }
@@ -121,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(Color.fromARGB(255, 25, 184, 217)),
+                            MaterialStateProperty.all<Color>(CustomColor.cAzul),
                         shape: MaterialStateProperty.all<OutlinedBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(24.0),

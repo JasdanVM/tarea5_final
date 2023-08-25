@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:tarea5_final/src/controllers/language_controller.dart';
-import 'package:tarea5_final/src/models/language.dart';
+import '../controllers/language_controller.dart';
+import '../models/colors.dart';
+import '../models/language.dart';
 
 import '../shared/constantes.dart';
 
@@ -14,7 +15,7 @@ class ConfiguracionScreen extends StatelessWidget {
     const TextStyle blancoText = TextStyle(color: Colors.white);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Configuración'),
+        title: const Text('Configuración'),
       ),
       body: Center(
         child: Padding(
@@ -31,7 +32,7 @@ class ConfiguracionScreen extends StatelessWidget {
               ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor:
-                    MaterialStateProperty.all<Color>(Color.fromARGB(255, 25, 184, 217)),
+                    MaterialStateProperty.all<Color>(CustomColor.cAzul),
                   shape: MaterialStateProperty.all<OutlinedBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24.0),
@@ -51,7 +52,7 @@ class ConfiguracionScreen extends StatelessWidget {
               ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor:
-                    MaterialStateProperty.all<Color>(Color.fromARGB(255, 25, 184, 217)),
+                    MaterialStateProperty.all<Color>(CustomColor.cAzul),
                   shape: MaterialStateProperty.all<OutlinedBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24.0),
