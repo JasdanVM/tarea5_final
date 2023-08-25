@@ -1,8 +1,8 @@
 
-import '../pages/login_screen.dart';
-import '../pages/lista_peliculas_screen.dart';
+import '../pages/login_page.dart';
+import '../pages/lista_peliculas_page.dart';
 //import '../pages/pelicula_screen.dart';
-import '../pages/configuracion_screen.dart';
+import '../pages/configuracion_page.dart';
 import 'constantes.dart';
 
 final rutas = {

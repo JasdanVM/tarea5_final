@@ -45,10 +45,8 @@ class _ListaPeliculasScreenState extends State<ListaPeliculasScreen> {
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 10, 38, 64),
         iconTheme: IconThemeData(color: Color.fromARGB(255, 25, 184, 217)),
-        title: Builder(
-          builder: (context) => (languageController.langCode=='') ? 
-          const Text('Popular Movies List',style: blancoText,) : const Text('Lista de Películas Populares',style: blancoText,)
-          ),
+        title: (languageController.langCode=='') ? 
+          const Text('Popular Movies List',style: blancoText,) : const Text('Lista de Películas Populares',style: blancoText,),
         // automaticallyImplyLeading: false,
       ),
       drawer: Drawer(
@@ -61,7 +59,7 @@ class _ListaPeliculasScreenState extends State<ListaPeliculasScreen> {
               ),
               child: ListTile(
                 onTap: () {},
-                leading: Icon(Icons.person,size: 50, ), //imagen de perfil, si la hay
+                leading: Icon(Icons.person,size: 50, ), //imagen de perfil, de haberla
                 title: Text('Hola ${loginController.userName}',style: blancoText),
               ),
             ),
@@ -85,44 +83,56 @@ class _ListaPeliculasScreenState extends State<ListaPeliculasScreen> {
           ],
         ),
       ),
-      body: ListView.builder(
-        itemCount: peliculas.length,
-        itemBuilder: (context, index) {
-          final pelicula = peliculas[index];
-          return Column(
-            children: [
-              ListTile(
-                // ignore: unnecessary_null_comparison
-                leading: pelicula.poster != null
-                    ? ClipRRect(
-                      borderRadius: BorderRadius.circular(4.0),
-                      child: Image.network(
-                          'https://image.tmdb.org/t/p/w92${pelicula.poster}',),
-                    )
-                    : const Icon(Icons.movie),
-                title: Text(pelicula.titulo),
-                onTap: () {
-                  Navigator.pushNamed(context, Rutas.pantallaListaPeliculas.name,
+      body: Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: ListView.builder(
+          itemCount: peliculas.length,
+          itemBuilder: (context, index) {
+            final pelicula = peliculas[index];
+            return Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, Rutas.pantallaListaPeliculas.name,
                       arguments: pelicula);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PeliculaScreen(movie: pelicula),
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PeliculaScreen(movie: pelicula),
+                      ),
+                    );
+                  } ,
+                  child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Row(
+                        children: [
+                          pelicula.poster != null
+                            ? ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.network(
+                                  'https://image.tmdb.org/t/p/w92${pelicula.poster}',height: 100),
+                            )
+                            : const Icon(Icons.movie),
+                          const SizedBox(
+                            width: 40,
+                          ),
+                          Text(pelicula.titulo)
+                        ],
+                      ),
                     ),
-                  );
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Container(
-                  height: 0.5,
-                  width: double.infinity,
-                  color: Color.fromARGB(128, 138, 205, 135),
                 ),
-              )
-            ],
-          );
-        },
+                Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: Container(
+                    height: 0.5,
+                    width: double.infinity,
+                    color: Color.fromARGB(128, 138, 205, 135),
+                  ),
+                )
+              ],
+            );
+          },
+        ),
       ),
     );
   }

@@ -27,7 +27,7 @@ class ConfiguracionScreen extends StatelessWidget {
             children: [
               const Spacer(),
               const Text('Cambiar Idioma de Peliculas en la Lista'),
-              Container(height: 30),
+              const SizedBox(height: 30),
               ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor:
@@ -47,7 +47,7 @@ class ConfiguracionScreen extends StatelessWidget {
                   style: blancoText,
                 ),
               ),
-              Container(height: 15),
+              const SizedBox(height: 15),
               ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor:

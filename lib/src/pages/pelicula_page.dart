@@ -78,20 +78,17 @@ class _PeliculaScreenState extends State<PeliculaScreen> {
               ),
             ),
           ),
-          Builder(builder: (context) => (languageController.langCode=='') ? const Text('Description:') : const Text('Descripción:')    
-          ),
+          (languageController.langCode=='') ? const Text('Description:') : const Text('Descripción:'),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(widget.movie.sinopsis),
           ),
-          Builder(builder: (context) => (languageController.langCode=='') ? const Text('Release date:') : const Text('Fecha de lanzamiento:')    
-          ),
+          (languageController.langCode=='') ? const Text('Release date:') : const Text('Fecha de lanzamiento:'),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(widget.movie.fecha),
           ),
-          Builder(builder: (context) => (languageController.langCode=='') ? const Text('Cast:') : const Text('Actores/Actrices:')    
-          ),
+          (languageController.langCode=='') ? const Text('Cast:') : const Text('Actores/Actrices:'),
           Expanded(
             child: ListView.builder(
               itemCount: cast.length,
