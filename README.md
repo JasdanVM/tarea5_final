@@ -14,4 +14,4 @@ Caracteríasticas a resaltar
 + Menú lateral en la pantalla de la lista para acceder a pantalla de Configuración, y Cerrar Sesión
 + Cambiar el idioma de la Lista de Películas (Español/English) en Configuración
 + Nombre de Usuario e Idioma se guardan en las preferencias
-+ Maximizar el póster de la película en la pantalla de detalles
++ Maximizar el póster de la película, y mostrar la descripción completa en la pantalla con los detalles
