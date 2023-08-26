@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import '../models/colors.dart';
 import '../controllers/language_controller.dart';
 import '../controllers/login_controller.dart';
@@ -123,6 +125,7 @@ class _ListaPeliculasScreenState extends State<ListaPeliculasScreen> {
               onTap: () {
                 Navigator.pop(context);
                 box.remove('token');
+                box.remove('user');
                 Navigator.of(context).pushNamed(Rutas.inicioSesion.name);
               },
             ),
@@ -157,19 +160,29 @@ class _ListaPeliculasScreenState extends State<ListaPeliculasScreen> {
                   GestureDetector(
                     onTap: () {
                       Navigator.pushNamed(
-                          context, Rutas.pantallaPelicula.name,
-                          arguments: pelicula);
+                        context, Rutas.pantallaPelicula.name,
+                        arguments: pelicula
+                      );
                     },
                     child: Container(
                       margin: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Row(
                         children: [
-                          pelicula.poster != ''
+                          pelicula.poster.isNotEmpty
                               ? ClipRRect(
                                   borderRadius: BorderRadius.circular(8.0),
-                                  child: Image.network(
-                                      'https://image.tmdb.org/t/p/w92${pelicula.poster}',
-                                      height: 100),
+                                  child: Builder(
+                                    builder: (context) {
+                                      try{
+                                        return Image.network(
+                                          'https://image.tmdb.org/t/p/w92${pelicula.poster}',
+                                          height: 100
+                                        );
+                                      }catch (e){
+                                        return const Icon(Icons.broken_image);
+                                      } 
+                                    }
+                                  ),
                                 )
                               : const Icon(Icons.movie),
                           const SizedBox(
@@ -178,7 +191,17 @@ class _ListaPeliculasScreenState extends State<ListaPeliculasScreen> {
                           Expanded(
                             child: 
                               Text(pelicula.titulo,softWrap: true,maxLines: 2,overflow: TextOverflow.ellipsis),
-                          )
+                          ),
+                          const SizedBox(
+                            width: 40,
+                          ),
+                          CircularPercentIndicator(
+                            radius: 20.0,
+                            lineWidth: 5.0,
+                            percent: pelicula.puntaje/10,
+                            center: Text((pelicula.puntaje*10).toStringAsFixed(0) ),
+                            progressColor: CustomColor.cVerde,
+                          ),
                         ],
                       ),
                     ),
