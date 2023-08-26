@@ -41,7 +41,6 @@ dependencies:
   get_storage: ^2.1.1
   percent_indicator: ^4.2.3
   marquee: ^2.2.3
-  scroll_loop_auto_scroll: ^0.0.5
 
 dev_dependencies:
   flutter_test:
